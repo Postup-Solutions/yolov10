@@ -541,7 +541,7 @@ class Exporter:
             asset = attempt_download_asset(url, repo="pnnx/pnnx", release="latest")
             if check_is_path_safe(Path.cwd(), asset):  # avoid path traversal security vulnerability
                 unzip_dir = Path(asset).with_suffix("")
-                (unzip_dir / name).rename(pnnx)  # move binary to ROOT
+                shutil.move(src=unzip_dir / name, dst=pnnx) # move binary to ROOT
                 shutil.rmtree(unzip_dir)  # delete unzip dir
                 Path(asset).unlink()  # delete zip
                 pnnx.chmod(0o777)  # set read, write, and execute permissions for everyone
